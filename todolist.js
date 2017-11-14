@@ -37,13 +37,51 @@ router.post('/', function (req, res) {
 });
 
 
+
+
+
 //export module -------------------------------------
 module.exports = router;*/
+
+
 
 var express = require('express');
 var router = express.Router();
 var db = require('./dbconnection'); //database
 var bodyParser = require('body-parser').text();
+
+//tolkens
+
+var jwt = require("jsonwebtoken");
+
+var secret = "frenchfriestastegood!"; //used to check the token
+var logindata; //logindata from the token
+
+
+//Authorize all travel-endpoints --------------------
+router.use(function (req, res, next) {
+
+    //get the token from the URL-variable named 'token'
+    var token = req.query['token'];
+
+    if (!token) {
+        res.status(403).json({msg: "No token received"}); //send
+        return; //quit
+    }
+    else {
+        try {
+          logindata = jwt.verify(token, secret); //check the token
+        }
+        catch(err) {
+          res.status(403).json({msg: "The token is not valid!"}); //send
+          return; //quit
+        }
+    }
+
+    next(); //we have a valid token - go to the requested endpoint
+});
+
+
 
 //endpoint: POST travels -----------------------------
 router.post('/', bodyParser, function (req, res) {
@@ -51,9 +89,14 @@ router.post('/', bodyParser, function (req, res) {
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
-    var sql = `PREPARE insert_todolist (int, int, text) AS
+    /*var sql = `PREPARE insert_todolist (int, int, text) AS
                 INSERT INTO todolist VALUES(DEFAULT, $2, $3); EXECUTE insert_todolist
-                (0, 0, '${upload.listname}')`;
+                (0, 0, '${upload.listname}')`;*/
+
+    var sql = `PREPARE insert_todolist (int, int, text, text) AS
+                INSERT INTO todolist VALUES(DEFAULT, $2, $3, $4);
+		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;
+
 
     db.any(sql).then(function(data) {
 
@@ -69,7 +112,13 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    var sql = 'SELECT * FROM todoview';
+    //var sql = 'SELECT * FROM todoview';
+
+    var sql = `PREPARE get_todolist (text) AS
+            SELECT * FROM todoview WHERE loginname=$1;
+            EXECUTE get_todolist('${logindata.loginname}')`;
+
+
     db.any(sql).then(function(data) {
 
         res.status(200).json(data); //success – send the data as JSON!
@@ -89,7 +138,12 @@ router.delete('/', function (req, res) {
             DELETE FROM todolist WHERE id=$1 RETURNING *;
             EXECUTE delete_listid('${upload}')`;*/
 
-    var sql = "DELETE FROM todolist WHERE listid='1' RETURNING *";
+    //var sql = "DELETE FROM todolist WHERE listid='1' RETURNING *";
+
+    var sql = `PREPARE delete_todolist (int, text) AS
+            DELETE FROM todolist WHERE listid=$1 AND loginname=$2 RETURNING *;
+            EXECUTE delete_todolist('${upload}', '${logindata.loginname}')`;
+
 
 
     db.any(sql).then(function(data) {
