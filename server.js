@@ -64,9 +64,9 @@ var todoList = require('./todolist.js');
 
 app.use('/todo/todolist/', todoList);
 
-//Not yet implemented:
-//var users = require('./users.js');
-//app.use('/todo/users/', users);
+// USERS
+var users = require('./users.js');
+app.use('/todo/users/', users);
 
 //------------------------------------------------
 app.listen(process.env.PORT || 8080, function () {
