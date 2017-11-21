@@ -61,12 +61,16 @@ app.use(function(req, res, next) {
 // -----------------------------------------------
 //route handling is delegated to:
 var todoList = require('./todolist.js');
-
 app.use('/todo/todolist/', todoList);
 
 // USERS
 var users = require('./users.js');
 app.use('/todo/users/', users);
+
+// List items
+var listitem = require('./listitem.js');
+app.use('/todo/listitem/', listitem);
+
 
 //------------------------------------------------
 app.listen(process.env.PORT || 8080, function () {
