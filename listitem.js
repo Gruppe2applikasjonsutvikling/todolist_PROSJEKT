@@ -44,14 +44,11 @@ router.post('/', bodyParser, function (req, res) {
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
-    /*var sql = `PREPARE insert_todolist (int, int, text) AS
-                INSERT INTO todolist VALUES(DEFAULT, $2, $3); EXECUTE insert_todolist
-                (0, 0, '${upload.listname}')`;*/
 
     var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
                 INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
 		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;
-    console.log(sql);
+
 
 
 
@@ -71,17 +68,7 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-
-    console.log("test");
     var sql = 'SELECT * FROM listitemview';
-
-    /*var sql = `PREPARE get_listitem (text) AS
-            SELECT * FROM listitemview WHERE loginname=$1;
-            EXECUTE get_listitem('${logindata.loginname}')`;
-    */
-    console.log(sql);
-
-
 
     db.any(sql).then(function(data) {
 
@@ -94,40 +81,7 @@ router.get('/', function (req, res) {
     });
 });
 
-//endpoint: DELETE travels -----------------------------
-//router.delete('/', function (req, res) {
-    //var upload = req.query.listid; //uploaded data should be sanitized
 
-    /*var sql = `PREPARE delete_listid (int) AS
-            DELETE FROM todolist WHERE id=$1 RETURNING *;
-            EXECUTE delete_listid('${upload}')`;*/
-
-    //var sql = "DELETE FROM todolist WHERE listid='1' RETURNING *";
-
-   /* var sql = `PREPARE delete_todolist (int, text) AS
-            DELETE FROM todolist WHERE listid=$1 AND loginname=$2 RETURNING *;
-            EXECUTE delete_todolist('${upload}', '${logindata.loginname}')`;
-*/
-/*
-    var sql = "DELETE FROM todolist WHERE listid='1' RETURNING *";
-
-
-    db.any(sql).then(function(data) {
-        db.any("DEALLOCATE delete_listid");
-
-        if (data.length > 0) {
-            res.status(200).json({msg: "delete ok"}); //success!
-        }
-        else {
-            res.status(200).json({msg: "can't delete"});
-
-        }
-
-    }).catch(function(err) {
-        res.status(500).json(err);
-    });
-});
-*/
 
 //export module -------------------------------------
 module.exports = router;

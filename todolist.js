@@ -1,50 +1,3 @@
-/*var express = require('express');
-var router = express.Router();
-var db = require('./dbconnection'); //database
-
-//endpoint: GET travels -----------------------------
-router.get('/', function (req, res) {
-
-    var sql = 'SELECT * FROM todoview';
-    db.any(sql).then(function(data) {
-
-        res.status(200).json(data); //success – send the data as JSON!
-
-    }).catch(function(err) {
-
-        res.status(500).json(err);
-
-    });
-});
-
-//endpoint: POST travels ----------------------------
-router.post('/', function (req, res) {
-
-    var sql = `PREPARE insert_todolist (int, int, text) AS
-                INSERT INTO todolist VALUES(DEFAULT, $2, $3); EXECUTE insert_todolist
-                (0, 0, 'A new list')`;
-
-    db.any(sql).then(function(data) {
-
-	db.any("DEALLOCATE insert_todolist");
-	res.status(200).json({msg: "insert ok"}); //success!
-
-    }).catch(function(err) {
-
-        	res.status(500).json(err);
-
-    });
-});
-
-
-
-
-
-//export module -------------------------------------
-module.exports = router;*/
-
-
-
 var express = require('express');
 var router = express.Router();
 var db = require('./dbconnection'); //database
@@ -89,10 +42,6 @@ router.post('/', bodyParser, function (req, res) {
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
-    /*var sql = `PREPARE insert_todolist (int, int, text) AS
-                INSERT INTO todolist VALUES(DEFAULT, $2, $3); EXECUTE insert_todolist
-                (0, 0, '${upload.listname}')`;*/
-
     var sql = `PREPARE insert_todolist (int, int, text, text) AS
                 INSERT INTO todolist VALUES(DEFAULT, $2, $3, $4);
 		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;
@@ -112,12 +61,7 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    //var sql = 'SELECT * FROM todoview';
-
-    var sql = `PREPARE get_todolist (text) AS
-            SELECT * FROM todoview WHERE loginname=$1;
-            EXECUTE get_todolist('${logindata.loginname}')`;
-    //var sql = 'SELECT * FROM listeview';
+    var sql = 'SELECT * FROM listeview';
 
 
     db.any(sql).then(function(data) {
@@ -134,12 +78,6 @@ router.get('/', function (req, res) {
 //endpoint: DELETE travels -----------------------------
 router.delete('/', function (req, res) {
     var upload = req.query.listid; //uploaded data should be sanitized
-
-    /*var sql = `PREPARE delete_listid (int) AS
-            DELETE FROM todolist WHERE id=$1 RETURNING *;
-            EXECUTE delete_listid('${upload}')`;*/
-
-    //var sql = "DELETE FROM todolist WHERE listid='1' RETURNING *";
 
     var sql = `PREPARE delete_todolist (int, text) AS
             DELETE FROM todolist WHERE listid=$1 AND loginname=$2 RETURNING *;
