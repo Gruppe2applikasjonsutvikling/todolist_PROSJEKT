@@ -39,8 +39,6 @@ router.use(function (req, res, next) {
 //endpoint: POST travels -----------------------------
 router.post('/', bodyParser, function (req, res) {
 
-    console.log("post-funksjonen");
-
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
@@ -78,6 +76,33 @@ router.get('/', function (req, res) {
 
         res.status(500).json(err);
 
+    });
+});
+
+
+//endpoint: DELETE travels -----------------------------
+router.delete('/', function (req, res) {
+    var upload = req.query.itemid; //uploaded data should be sanitized
+
+    var sql = `PREPARE delete_listitem (int, text) AS
+            DELETE FROM listitem WHERE itemid=$1 AND loginname=$2 RETURNING *;
+            EXECUTE delete_listitem('${upload}', '${logindata.loginname}')`;
+
+
+
+    db.any(sql).then(function(data) {
+        db.any("DEALLOCATE delete_itemid");
+
+        if (data.length > 0) {
+            res.status(200).json({msg: "delete ok"}); //success!
+        }
+        else {
+            res.status(200).json({msg: "can't delete"});
+
+        }
+
+    }).catch(function(err) {
+        res.status(500).json(err);
     });
 });
 

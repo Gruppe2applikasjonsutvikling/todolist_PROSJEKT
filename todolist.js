@@ -75,6 +75,11 @@ router.get('/', function (req, res) {
     });
 });
 
+
+
+
+
+
 //endpoint: DELETE travels -----------------------------
 router.delete('/', function (req, res) {
     var upload = req.query.listid; //uploaded data should be sanitized
