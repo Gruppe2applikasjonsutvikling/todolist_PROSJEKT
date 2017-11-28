@@ -66,7 +66,8 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    var sql = 'SELECT * FROM listitemview';
+    //var sql = 'SELECT * FROM listitemview';
+    var sql = 'SELECT * FROM listeview';
 
     db.any(sql).then(function(data) {
 
@@ -82,13 +83,14 @@ router.get('/', function (req, res) {
 
 //endpoint: DELETE travels -----------------------------
 router.delete('/', function (req, res) {
-    var upload = req.query.itemid; //uploaded data should be sanitized
+    var itemid = req.query.itemid; //uploaded data should be sanitized
+    var token = req.query.token;
 
-    var sql = `PREPARE delete_listitem (int, text) AS
-            DELETE FROM listitem WHERE itemid=$1 AND loginname=$2 RETURNING *;
-            EXECUTE delete_listitem('${upload}', '${logindata.loginname}')`;
+    var sql = `PREPARE delete_listitem (int) AS
+            DELETE FROM listitem WHERE itemid=$1 RETURNING *;
+            EXECUTE delete_listitem('${itemid}')`;
 
-
+console.log(req.query);
 
     db.any(sql).then(function(data) {
         db.any("DEALLOCATE delete_itemid");
@@ -97,7 +99,7 @@ router.delete('/', function (req, res) {
             res.status(200).json({msg: "delete ok"}); //success!
         }
         else {
-            res.status(200).json({msg: "can't delete"});
+            res.status(200).json({msg: "can't delete, mistake in listitem-js"});
 
         }
 

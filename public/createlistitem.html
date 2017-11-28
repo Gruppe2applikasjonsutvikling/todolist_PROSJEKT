@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>test client</title>
+        <script src="superfetch2.js"></script>
+    </head>
+
+
+    <body>
+
+        <input id="itemDesc" type="text" placeholder="Description">
+        <input id="itemDeadl" type="date" placeholder="Deadline">
+        <input id="itemTag" type="text" placeholder="Colour tag">
+        <input id="listID" type="number" placeholder="ListeID placeholder"> <!-- skal erstattes-->
+        <button id="inpBtn">Add list item</button>
+
+    </body>
+    <script>
+
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        var url = "http://localhost:8080/todo/listitem/?token=" + token;
+
+        superfetch(url, "json", succ, error);
+
+        var itemDesc = document.getElementById("itemDesc");
+        var itemDeadl = document.getElementById("itemDeadl");
+        var itemTag = document.getElementById("itemTag");
+        var listIDinp = document.getElementById("listID"); //skal erstattes
+        var inpBtn = document.getElementById("inpBtn");
+        console.log("hei");
+
+        //button click -------------------------
+        var listidtemp = 6;
+        inpBtn.onclick = function () {
+
+            console.log("hallo");
+
+            var upload = JSON.stringify({
+                itemname: itemDesc.value,
+                itemdeadl: itemDeadl.value,
+                itemtag: itemTag.nodeValue,
+                listid: listidtemp //må erstattes
+                });
+
+            var token = JSON.parse(localStorage.getItem("logindata")).token;
+            var url = "http://localhost:8080/todo/listitem/?token=" + token;
+
+
+            var cfg = {
+                method: "POST",
+                body: upload
+
+            }
+                console.log("cfg");
+
+            superfetch(url, "json", succ, error, cfg);
+            console.log("superfetch");
+
+
+            //success --------------------------------------
+            function succ(data) {
+                console.log(data);
+                console.log("success");
+            }
+
+            //error ----------------------------------------
+            function error(err) {
+                console.log(err);
+            }
+
+
+        };
+
+
+
+
+
+
+    //success --------------------------------------
+        function succ(data) {
+
+            console.log(data);
+
+            for (var i = 0; i < data.length; i++) {
+                var div = document.createElement("div");
+
+                div.innerHTML += "<h3>ID: " + data[i].itemid + "</h3>";
+                div.innerHTML += "<h3>ItemName: " + data[i].itemdesc + "</h3>";
+
+                var hr = document.createElement("hr");
+                document.body.appendChild(div);
+                document.body.appendChild(hr);
+            }
+        }
+
+
+        //error ----------------------------------------
+        function error(err) {
+            console.log(err);
+        }
+
+
+
+    </script>
+</html>

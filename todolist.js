@@ -61,7 +61,8 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    var sql = 'SELECT * FROM listeview';
+    //var sql = 'SELECT * FROM listeview';
+    var sql = 'SELECT * FROM todoview';
 
 
     db.any(sql).then(function(data) {
@@ -84,20 +85,23 @@ router.get('/', function (req, res) {
 router.delete('/', function (req, res) {
     var upload = req.query.listid; //uploaded data should be sanitized
 
-    var sql = `PREPARE delete_todolist (int, text) AS
+    /*var sql = `PREPARE delete_todolist (int, text) AS
             DELETE FROM todolist WHERE listid=$1 AND loginname=$2 RETURNING *;
-            EXECUTE delete_todolist('${upload}', '${logindata.loginname}')`;
+            EXECUTE delete_todolist('${upload}', '${logindata.loginname}')`;*/
 
+    var sql = `PREPARE delete_todolist (int) AS
+            DELETE FROM todolist WHERE listid=$1 RETURNING *;
+            EXECUTE delete_todolist('${upload}')`;
 
 
     db.any(sql).then(function(data) {
-        db.any("DEALLOCATE delete_listid");
+        db.any("DEALLOCATE delete_todolist");
 
         if (data.length > 0) {
             res.status(200).json({msg: "delete ok"}); //success!
         }
         else {
-            res.status(200).json({msg: "can't delete"});
+            res.status(200).json({msg: "can't delete, mistake in todolist-js"});
 
         }
 

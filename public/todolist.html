@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>test client</title>
+    <script src="superfetch2.js"></script>
+</head>
+
+<body>
+
+    <!-- Add list-->
+
+    <div id="addListNm">
+    <h3>Add new List</h3>
+    <input id="inpListName" placeholder="List name">
+    <button id="btnCreate">Create new list</button>
+    </div>
+
+    <!-- Delete list-->
+    <div id="deleteList">
+    <h3>Delete List</h3>
+    <!--<input id="inpID">-->
+    <select id="chooseList2"></select>
+    <button id="btnDelete">Delete List</button>
+    </div>
+
+    <hr>
+
+    <!-- Add list item-->
+
+    <div id="addListItm">
+    <h3>Add list item</h3>
+    <input id="itemDesc" type="text" placeholder="Description">
+    <input id="itemDeadl" type="date" placeholder="Deadline">
+    <!--<input id="itemTag" type="text" placeholder="Colour tag">-->
+    <select id="itemTag"></select>
+
+    <select id="chooseList"></select>
+    <!--<input id="listID" type="number" placeholder="ListeID placeholder"> --> <!-- skal erstattes-->
+    <button id="inpBtn">Add list item</button>
+    </div>
+
+    <hr>
+
+
+
+    <div id="cont"></div>
+
+</body>
+
+<script>
+
+
+
+    //var inpID = document.getElementById("inpID");
+    var btnDelete = document.getElementById("btnDelete");
+    var cont = document.getElementById("cont");
+
+    //listenavn
+    var token = JSON.parse(localStorage.getItem("logindata")).token;
+    var listeurl = "http://localhost:8080/todo/todolist/?token=" + token;
+    superfetch(listeurl, "json", succList, error);
+
+    //listeitems
+
+    var url = "http://localhost:8080/todo/listitem/?token=" + token;
+    superfetch(url, "json", succ, error);
+
+
+
+    //addlistitem
+
+    var itemDesc = document.getElementById("itemDesc");
+    var itemDeadl = document.getElementById("itemDeadl");
+    var itemTag = document.getElementById("itemTag");
+    var listIDinp = 0;
+    var inpBtn = document.getElementById("inpBtn");
+    var sel = document.getElementById("chooseList");
+    var sel2 = document.getElementById("chooseList2");
+
+    //addlist
+    var inpListName = document.getElementById("inpListName");
+    var resArr = [];
+    //console.log(resArr);
+
+
+    //Make array of all list names
+
+    function succList(data){
+
+        // Sorter ut unike listeID-----------------------------
+
+        //Sorterer data til en ny array som bare tar vare på unike listid'er
+        //gir ut en array med listid og listname som brukes til å lage en liste senere
+
+
+        data.filter(function(item){
+          var i = resArr.findIndex(x => x.listid == item.listid);
+          if(i <= -1)
+                resArr.push({listid: item.listid, listname: item.listname});
+        });
+        console.log(data);
+
+        //console.log(resArr);
+        //console.log(resArr[1].listname);
+    }
+
+
+
+    //success --------------------------------------
+    function succ(data) {
+
+        //console.log(data);
+        //console.log(resArr[1].listname);
+
+
+
+        // Selectliste for Add ListItem
+            for(var i = 0; i < resArr.length; i++) {
+                var opt = document.createElement("option");
+                opt.innerHTML = resArr[i].listname;
+                opt.value = resArr[i].listid;
+                sel.appendChild(opt);
+
+            }
+
+        //Selectliste for add Color Tag i Add ListItem
+
+    var colArr = [];
+        colArr[0] = {color: "Green", id: "0"}
+        colArr[1] = {color: "Yellow", id: "1"}
+        colArr[2] = {color: "Red", id: "2"}
+
+    for(var i = 0; i < colArr.length; i++) {
+                var opt = document.createElement("option");
+                opt.innerHTML = colArr[i].color;
+                opt.value = colArr[i].id;
+                itemTag.appendChild(opt);
+
+            }
+
+    //console.log(colArr);
+
+
+        // Selectliste for Delete List
+        for(var i = 0; i < resArr.length; i++) {
+                var opt = document.createElement("option");
+                opt.innerHTML = resArr[i].listname;
+                opt.value = resArr[i].listid;
+                sel2.appendChild(opt);
+
+            }
+
+
+
+
+
+        //Lister --------------------------
+        //lager en liste med listenavn basert på resArr, dvs. kun unike listenavn
+        for (var i = 0; i < resArr.length; i++) {
+
+
+            var div = document.createElement("div");
+            //div.innerHTML += "<h2>Listname: " + resArr[i].listname + "</h2>";
+            div.innerHTML += "<h1>" + resArr[i].listname + "</h2>";
+
+            var hr = document.createElement("hr");
+
+
+            //populerer listene med listitems fra data.
+            for (var j = 0; j < data.length; j++) {
+
+
+                // hvis listeid-en til listitem matcher listeid-en til listen den forsøkes å legges i, blir den lagt til.
+                if (resArr[i].listid === data[j].listid){
+
+                    //indexnummeret det testes for går opp en
+
+                    //div.innerHTML += "<h3>Descr: " + data[j].itemdesc + "</h3>";
+                    div.innerHTML += "<h3>" + data[j].itemdesc + "</h3>";
+
+
+                    if (data[j].itemdeadl != null){  //sjekker om det er en deadline
+                        var date = new Date(data[j].itemdeadl);
+                        var dateStr = date.getDate()+ '/' + (date.getMonth() + 1) + '/'+ date.getFullYear();//date.getFullYear();
+                        //div.innerHTML += "<h3>Deadline: " + dateStr + "</h3>"; //legger til deadline
+                        div.innerHTML += "<h3>" + dateStr + "</h3>"; //legger til deadline
+                    }
+
+
+                    //Lag fargeboks etter tag
+                    var newDiv = document.createElement("div");
+
+
+                    newDiv.id = "tagBox";
+
+
+                    if (data[j].itemtag == 0) {
+                        newDiv.className = "green";
+                        }
+                    else if (data[j].itemtag == 1) {
+                            newDiv.className = "yellow";
+                        }
+                    else if (data[j].itemtag == 2) {
+                            newDiv.className = "red";
+                    }
+                    else if (data[j].itemtag == null) {
+                            newDiv.className = "noTag";
+                    }
+
+                    div.appendChild(newDiv);
+
+
+
+                    //Delete-button
+
+                    //div.innerHTML += "<h3>ItemID: " + data[j].itemid + "</h3>";
+
+
+                    var delItmBtn = document.createElement("input");
+                    delItmBtn.type = "button";
+                    delItmBtn.id = data[j].itemid;
+
+                    delItmBtn.value = "Delete";
+                    delItmBtn.setAttribute("onclick", "delItm()");
+                    div.appendChild(delItmBtn);
+
+
+                }
+            };
+
+            var hr = document.createElement("hr");
+            cont.appendChild(div);
+            cont.appendChild(hr);
+
+            }
+
+    }
+
+
+    //error ----------------------------------------
+    function error(err) {
+        console.log(err);
+    }
+
+
+
+
+    // DELETE FUNCTION
+
+
+
+    btnDelete.onclick = function() {
+
+        //var url = "http://localhost:8080/todo/todolist/?listid=" + inpID.value;
+        console.log(sel2.value);
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        var url = "http://localhost:8080/todo/todolist/?listid=" + sel2.value + "&token=" + token;
+
+        superfetch(url, "json", delSucc, error, {method: "DELETE"});
+    }
+
+    //delete success -------------------------------
+    function delSucc(data) {
+        console.log(data);
+        console.log("err: delSucc  toDoList-html");
+    }
+
+
+    // DELETE ITEM FUNCTION
+
+    function delItm() {
+        console.log("hei");
+        console.log(event.currentTarget.id);
+        var item = event.currentTarget.id;
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        var url2 = "http://localhost:8080/todo/listitem/?itemid=" + item + "&token=" + token;
+
+        console.log(url2);
+
+        superfetch(url2, "json", del2Succ, error, {method: "DELETE"});
+        console.log("deletefin");
+    }
+
+        //delete success -------------------------------
+    function del2Succ(data) {
+        console.log("oops");
+        console.log(data);
+    }
+
+
+
+
+    // ADD ITEM CLICK
+
+
+        //button click -------------------------
+        inpBtn.onclick = function () {
+
+            var upload = JSON.stringify({
+                itemname: itemDesc.value,
+                itemdeadl: itemDeadl.value,
+                itemtag: itemTag.value,
+                listid: sel.value
+                });
+
+            var token = JSON.parse(localStorage.getItem("logindata")).token;
+            var url = "http://localhost:8080/todo/listitem/?token=" + token;
+
+
+            var cfg = {
+                method: "POST",
+                body: upload
+
+            }
+
+
+            superfetch(url, "json", succ, error, cfg);
+
+
+
+            //success --------------------------------------
+            function succ(data) {
+                console.log(data);
+
+            }
+
+            //error ----------------------------------------
+            function error(err) {
+                console.log(err);
+            }
+
+
+        };
+
+
+    //CREATE LISTNAME ---------------------------------
+    btnCreate.onclick = function() {
+
+
+
+
+        var upload = JSON.stringify({
+            listname: inpListName.value,
+        });
+
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        var url = "http://localhost:8080/todo/todolist/?token=" + token;
+
+        var cfg = {
+            method: "POST",
+            body: upload
+        }
+
+        superfetch(url, "json", succ, error, cfg);
+
+
+        //success --------------------------------------
+        function succ(data) {
+            console.log(data);
+        }
+
+        //error ----------------------------------------
+        function error(err) {
+            console.log(err);
+        }
+
+
+
+    }
+
+
+
+</script>
+    <style>
+
+        .red{
+
+            background: red;
+            width:50px;
+            height:20px;
+
+        }
+
+        .yellow{
+
+            background: yellow;
+            width:50px;
+            height:20px;
+
+        }
+
+        .green{
+
+            background: green;
+            width:50px;
+            height:20px;
+
+        }
+        .noTag{
+            background: blue;
+            width:50px;
+            height:20px;
+        }
+
+    </style>
+
+</html>
