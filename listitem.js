@@ -93,7 +93,7 @@ router.delete('/', function (req, res) {
 console.log(req.query);
 
     db.any(sql).then(function(data) {
-        db.any("DEALLOCATE delete_itemid");
+        db.any("DEALLOCATE delete_listitem");
 
         if (data.length > 0) {
             res.status(200).json({msg: "delete ok"}); //success!
