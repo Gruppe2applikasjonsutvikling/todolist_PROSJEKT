@@ -5,16 +5,20 @@
     <meta charset="utf-8" />
     <title>test client</title>
     <script src="superfetch2.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
 
+    <div id="hovedelement">
+    <div id="logo"><img src="logo.png" alt="logo" width="40%"></div>
     <input id="inpLoginname" placeholder="Loginname">
     <input id="inpPassword" placeholder="Password">
     <button id="btnLogin">Log in</button>
     <p id="error"></p>
 
     <p id="otherPage"><a href="createuser.html">Create User</a></p>
+        </div>
 
 </body>
 
@@ -57,7 +61,7 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        p.innerHTML = "Feil brukernavn eller passord!";
+        p.innerHTML = "Wrong username or password!";
 
     }
 

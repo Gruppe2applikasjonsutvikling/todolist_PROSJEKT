@@ -5,14 +5,18 @@
     <meta charset="utf-8" />
     <title>test client</title>
     <script src="superfetch2.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-
+    <div id="hovedelement">
+    <div id="logo"><img src="logo.png" alt="logo" width="40%"></div>
     <input id="inpLoginname" placeholder="Loginname">
     <input id="inpPassword" placeholder="Password">
     <input id="inpFullname" placeholder="Full name">
     <button id="btnCreate">Create User</button>
+        <p id="error"></p>
+    </div>
 
 </body>
 
@@ -24,6 +28,7 @@
     var inpPassword = document.getElementById("inpPassword");
     var inpFullname = document.getElementById("inpFullname");
     var btnCreate = document.getElementById("btnCreate");
+    var p = document.getElementById("error");
 
     //button click ---------------------------------
     btnCreate.onclick = function() {
@@ -61,6 +66,7 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
+        p.innerHTML = "User already exists";
     }
 
 
