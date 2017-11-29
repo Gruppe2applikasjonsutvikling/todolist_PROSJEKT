@@ -59,22 +59,20 @@
 
 <script>
 
-    //var otherPage = document.getElementById("otherPage");
 
-    //var inpID = document.getElementById("inpID");
     var btnDelete = document.getElementById("btnDelete");
     var cont = document.getElementById("cont");
 
     //listenavn
     var token = JSON.parse(localStorage.getItem("logindata")).token;
-    //var listeurl = "http://localhost:8080/todo/todolist/?token=" + token;
-    var listeurl = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
+    var listeurl = "http://localhost:8080/todo/todolist/?token=" + token;
+    //var listeurl = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
     superfetch(listeurl, "json", succList, error);
 
     //listeitems
 
-    //var url = "http://localhost:8080/todo/listitem/?token=" + token;
-    var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
+    var url = "http://localhost:8080/todo/listitem/?token=" + token;
+    //var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
     superfetch(url, "json", succ, error);
 
 
@@ -92,7 +90,6 @@
     //addlist
     var inpListName = document.getElementById("inpListName");
     var resArr = [];
-    //console.log(resArr);
 
 
     //Make array of all list names
@@ -110,19 +107,14 @@
           if(i <= -1)
                 resArr.push({listid: item.listid, listname: item.listname});
         });
-        console.log(data);
 
-        //console.log(resArr);
-        //console.log(resArr[1].listname);
+
     }
 
 
 
     //success --------------------------------------
     function succ(data) {
-
-        //console.log(data);
-        //console.log(resArr[1].listname);
 
 
 
@@ -172,7 +164,6 @@
 
 
             var div = document.createElement("div");
-            //div.innerHTML += "<h2>Listname: " + resArr[i].listname + "</h2>";
             div.innerHTML += "<h1>" + resArr[i].listname + "</h2>";
 
             var hr = document.createElement("hr");
@@ -187,7 +178,6 @@
 
                     //indexnummeret det testes for går opp en
 
-                    //div.innerHTML += "<h3>Descr: " + data[j].itemdesc + "</h3>";
                     div.innerHTML += "<h3>" + data[j].itemdesc + "</h3>";
 
 
@@ -225,8 +215,6 @@
 
                     //Delete-button
 
-                    //div.innerHTML += "<h3>ItemID: " + data[j].itemid + "</h3>";
-
 
                     var delItmBtn = document.createElement("input");
                     delItmBtn.type = "button";
@@ -263,11 +251,10 @@
 
     btnDelete.onclick = function() {
 
-        //var url = "http://localhost:8080/todo/todolist/?listid=" + inpID.value;
-        console.log(sel2.value);
+
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url = "http://localhost:8080/todo/todolist/?listid=" + sel2.value + "&token=" + token;
-        var url = "https://krollparantes.herokuapp.com/todo/todolist/?listid=" + sel2.value + "&token=" + token;
+        var url = "http://localhost:8080/todo/todolist/?listid=" + sel2.value + "&token=" + token;
+        //var url = "https://krollparantes.herokuapp.com/todo/todolist/?listid=" + sel2.value + "&token=" + token;
 
         superfetch(url, "json", delSucc, error, {method: "DELETE"});
     }
@@ -286,8 +273,8 @@
         console.log(event.currentTarget.id);
         var item = event.currentTarget.id;
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url2 = "http://localhost:8080/todo/listitem/?itemid=" + item + "&token=" + token;
-        var url2 = "https://krollparantes.herokuapp.com/todo/listitem/?itemid=" + item + "&token=" + token;
+        var url2 = "http://localhost:8080/todo/listitem/?itemid=" + item + "&token=" + token;
+        //var url2 = "https://krollparantes.herokuapp.com/todo/listitem/?itemid=" + item + "&token=" + token;
 
         console.log(url2);
 
@@ -318,8 +305,8 @@
                 });
 
             var token = JSON.parse(localStorage.getItem("logindata")).token;
-            //var url = "http://localhost:8080/todo/listitem/?token=" + token;
-            var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
+            var url = "http://localhost:8080/todo/listitem/?token=" + token;
+            //var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
 
             var cfg = {
                 method: "POST",
@@ -358,8 +345,8 @@
         });
 
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url = "http://localhost:8080/todo/todolist/?token=" + token;
-        var url = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
+        var url = "http://localhost:8080/todo/todolist/?token=" + token;
+        //var url = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
 
         var cfg = {
             method: "POST",
