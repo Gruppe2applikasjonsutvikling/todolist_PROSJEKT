@@ -34,7 +34,7 @@ app.use('/todo/listitem/', listitem);
 
 
 //------------------------------------------------
-app.listen(process.env.PORT || 8080, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('Server listening on port 8080!');
 });
 

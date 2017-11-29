@@ -22,19 +22,6 @@ input {
     font-family: 'Dosis', Georgia, Times, serif;
 }
 
-select {
-    width: 100%;
-    padding: 12px 20px;
-    float: inherit;
-    margin: 8px 0;
-    margin-right: 1%;
-    display: inline-block;
-    border: 1px solid lightgray;
-    box-sizing: border-box;
-    border-radius: 20px;
-    font-family: 'Dosis', Georgia, Times, serif;
-}
-
 input:focus {
     background-color: gainsboro;
 }
@@ -130,6 +117,8 @@ h3{
 
 }
 
+
+
 select{
 
    -webkit-appearance: none;
@@ -146,6 +135,7 @@ select{
    padding-left: 3%;
 
 }
+
 
 .red{
 
@@ -175,3 +165,7 @@ select{
         width:50px;
         height:20px;
         }
+
+#btns{
+    text-align: center;
+}

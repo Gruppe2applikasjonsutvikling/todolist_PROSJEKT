@@ -11,25 +11,37 @@
 <body>
 
     <div id="hovedelement">
-    <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
-    <input id="inpLoginname" placeholder="Loginname">
-    <input id="inpPassword" placeholder="Password">
-    <button id="btnLogin">Log in</button>
-    <p id="error"></p>
+            <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
 
-    <p id="otherPage"><a href="createuser.html">Create User</a></p>
-        </div>
+            <input id="inpLoginname" placeholder="Loginname">
+            <input id="inpPassword" placeholder="Password">
+
+            <div id="btns">
+                <button id="btnLogin">Log in</button>
+                <button id="btnCrUsr">Create user</button>
+            </div>
+
+            <p id="error"></p>
+    </div>
 
 </body>
 
 <script>
 
+    /* NOTE ------------------------
+    Dokumentet heter index.html fordi det skal hentes opp av serveren automatisk som det første dokumnentet som vises til brukeren. Jeg har også derfor satt inn link videre til "lag bruker" dokumentet i tilfelle den som loader siden ikke har en bruker.
+    */
 
 
     var inpLoginname = document.getElementById("inpLoginname");
     var inpPassword = document.getElementById("inpPassword");
     var btnCreate = document.getElementById("btnLogin");
     var p = document.getElementById("error");
+    var btnCrUsr = document.getElementById("btnCrUsr");
+
+    btnCrUsr.onclick = function() {
+        window.location.assign("https://krollparantes.herokuapp.com/createuser.html");
+    }
 
     //button click ---------------------------------
     btnLogin.onclick = function() {
@@ -39,7 +51,7 @@
             password: inpPassword.value
         });
 
-        //var url = "http://localhost:8080/todo/users/auth/";
+        //var url = "http://localhost:3000/todo/users/auth/";
         var url = "https://krollparantes.herokuapp.com/todo/users/auth/";
 
         var cfg = {
@@ -53,6 +65,7 @@
     //success --------------------------------------
     function succ(data) {
 
+
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
         window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
@@ -61,7 +74,8 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        p.innerHTML = "Wrong username or password!";
+        //p.innerHTML = "Wrong username or password!";
+        alert("Wrong username or password!");
 
     }
 
