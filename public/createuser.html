@@ -51,6 +51,7 @@
 
         superfetch(url, "json", succ, error, cfg);
         console.log(upload);
+        console.log("upload");
 
     }
 
@@ -69,7 +70,6 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        console.log(data);
         console.log("Her skjer det en feil");
         p.innerHTML = "User already exists";
     }
