@@ -38,4 +38,4 @@ app.listen(process.env.PORT || 8080, function () {
   console.log('Server listening on port 8080!');
 });
 
-//slide nr 46 i powerpointen
+//TODO: Erstatt alle "localhost" url-ene

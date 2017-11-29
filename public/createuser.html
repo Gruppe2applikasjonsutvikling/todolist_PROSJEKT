@@ -35,7 +35,9 @@
             fullname: inpFullname.value
         });
 
-        var url = "http://localhost:8080/todo/users/";
+
+        //var url = "http://localhost:8080/todo/users/";
+        var url = "https://krollparantes.herokuapp.com/todo/users/";
 
         var cfg = {
             method: "POST",
@@ -52,6 +54,7 @@
 
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
+        window.location.assign("https://krollparantes.herokuapp.com");
 
     }
 

@@ -12,6 +12,9 @@
     <input id="inpLoginname" placeholder="Loginname">
     <input id="inpPassword" placeholder="Password">
     <button id="btnLogin">Log in</button>
+    <p id="error"></p>
+
+    <p id="otherPage"><a href="createuser.html">Create User</a></p>
 
 </body>
 
@@ -22,6 +25,7 @@
     var inpLoginname = document.getElementById("inpLoginname");
     var inpPassword = document.getElementById("inpPassword");
     var btnCreate = document.getElementById("btnLogin");
+    var p = document.getElementById("error");
 
     //button click ---------------------------------
     btnLogin.onclick = function() {
@@ -31,7 +35,8 @@
             password: inpPassword.value
         });
 
-        var url = "http://localhost:8080/todo/users/auth/";
+        //var url = "http://localhost:8080/todo/users/auth/";
+        var url = "https://krollparantes.herokuapp.com//todo/users/auth/";
 
         var cfg = {
             method: "POST",
@@ -46,11 +51,14 @@
 
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
+        window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
     }
 
     //error ----------------------------------------
     function error(err) {
         console.log(err);
+        p.innerHTML = "Feil brukernavn eller passord!";
+
     }
 
 
