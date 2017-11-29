@@ -42,7 +42,8 @@
 
 
         //var url = "http://localhost:8080/todo/users/";
-        var url = "https://krollparantes.herokuapp.com/todo/users/";
+        var token = JSON.parse(localStorage.getItem("logindata")).token;
+        var url = "https://krollparantes.herokuapp.com/todo/users/?token=" + token";
 
         var cfg = {
             method: "POST",
@@ -61,6 +62,7 @@
         console.log(data);
 
         //save logindata/token to localStorage
+
         localStorage.setItem("logindata", JSON.stringify(data));
         //window.location.assign("https://krollparantes.herokuapp.com");
         console.log("suksess!");
