@@ -10,12 +10,12 @@
 
 <body>
     <div id="hovedelement">
-    <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
-    <input id="inpLoginname" placeholder="Loginname">
-    <input id="inpPassword" placeholder="Password">
-    <input id="inpFullname" placeholder="Full name">
-    <button id="btnCreate">Create User</button>
-        <p id="error"></p>
+        <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
+        <input id="inpLoginname" placeholder="Loginname">
+        <input id="inpPassword" placeholder="Password">
+        <input id="inpFullname" placeholder="Full name">
+        <button id="btnCreate">Create User</button>
+        <p id="usererr"></p>
     </div>
 
 </body>
@@ -28,7 +28,7 @@
     var inpPassword = document.getElementById("inpPassword");
     var inpFullname = document.getElementById("inpFullname");
     var btnCreate = document.getElementById("btnCreate");
-    var p = document.getElementById("error");
+    var p = document.getElementById("usererr");
 
     //button click ---------------------------------
     btnCreate.onclick = function() {
@@ -50,12 +50,14 @@
         }
 
         superfetch(url, "json", succ, error, cfg);
+        console.log(upload);
 
     }
 
 
      //success --------------------------------------
     function succ(data) {
+        console.log(data);
 
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
@@ -67,6 +69,8 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
+        console.log(data);
+        console.log("Her skjer det en feil");
         p.innerHTML = "User already exists";
     }
 
