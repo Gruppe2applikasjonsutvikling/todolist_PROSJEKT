@@ -18,10 +18,13 @@ var secret = "frenchfriestastegood!"; //used to create the token
     /*var sql = `PREPARE insert_user (int, text, text, text) AS
                 INSERT INTO users VALUES(DEFAULT, $2, $3, $4); EXECUTE insert_user
                 (0, '${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;*/
+
     /*var sql = `PREPARE insert_user (text, text, text) AS
                 INSERT INTO users VALUES($2, $3, $4); EXECUTE insert_user
                 ('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;*/
-    var sql = `INSERT INTO "users" ("loginname", "password", "fullname") VALUES('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;
+    //var sql = `INSERT INTO "users" ("loginname", "password", "fullname") VALUES('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;
+
+     var sql = `INSERT INTO users VALUES(DEFAULT, 'Hallooo', 'pass', 'fullt')`;
 
 
     db.any(sql).then(function(data) {
@@ -37,7 +40,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
 
     }).catch(function(err) {
 
-        consol.log("user.js error");
+        console.log("user.js error");
         res.status(500).json({err});
 
     });
@@ -51,15 +54,17 @@ var secret = "frenchfriestastegood!"; //used to create the token
 
     var upload = JSON.parse(req.body); //should be sanitized
 
-    /*var sql = `PREPARE get_user (text) AS
+    var sql = `PREPARE get_user (text) AS
                     SELECT * FROM users WHERE loginname=$1;
-                    EXECUTE get_user('${upload.loginname}')`;*/
-    var sql = `SELECT * FROM "users" WHERE loginname='${upload.loginname}`;
+                    EXECUTE get_user('${upload.loginname}')`;
+        console.log(upload);
+    //var sql = `SELECT * FROM "users" WHERE loginname='${upload.loginname}`;
+
 
 
     db.any(sql).then(function(data) {
 
-        //db.any("DEALLOCATE get_user");
+        db.any("DEALLOCATE get_user");
 
         //if wrong user or password -> quit
         if (data.length <= 0) {

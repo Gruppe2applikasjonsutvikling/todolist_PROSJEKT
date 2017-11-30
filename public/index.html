@@ -61,12 +61,11 @@
         }
 
         superfetch(url, "json", succ, error, cfg);
+        console.log(upload);
     }
 
     //success --------------------------------------
     function succ(data) {
-
-
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
         //window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
@@ -77,8 +76,7 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        //p.innerHTML = "Wrong username or password!";
-        alert("Wrong username or password!");
+        //alert("Wrong username or password!");
 
     }
 
