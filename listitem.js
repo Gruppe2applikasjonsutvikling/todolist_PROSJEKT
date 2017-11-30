@@ -53,7 +53,7 @@ router.post('/', bodyParser, function (req, res) {
 
     var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
                 INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
-		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemdesc}', '${upload.itemdeadl}', '${upload.itemtag}')`;
+		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemname}', '${upload.itemdeadl}', '${upload.itemtag}')`;
 
 
 
