@@ -68,7 +68,7 @@
     function succ(data) {
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
-        //window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
+        window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
         var token = JSON.parse(localStorage.getItem("logindata")).token;
         console.log(token);
     }
