@@ -39,6 +39,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
 
     }).catch(function(err) {
 
+        consol.log("user.js error");
         res.status(500).json({err});
 
     });
