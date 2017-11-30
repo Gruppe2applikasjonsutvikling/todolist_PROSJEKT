@@ -45,14 +45,15 @@ router.post('/', bodyParser, function (req, res) {
     /*var sql = `PREPARE insert_todolist (int, int, text, text) AS
                 INSERT INTO todolist VALUES(DEFAULT, $2, $3, $4);
 		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;*/
-    var sql = `PREPARE insert_todolist (text, text) AS
-                INSERT INTO "todolist" VALUES("listname","loginname");
-		  EXECUTE insert_todolist ('${upload.listname}', '${logindata.loginname}')`;
+    /*var sql = `PREPARE insert_todolist (int, int, text, text) AS
+                INSERT INTO todolist VALUES(DEFAULT, $2, $3, $4);
+		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;*/
+    var sql = `INSERT INTO "todolist"("userid", "listname", "loginname") VALUES( 0, '${upload.listname}', '${logindata.loginname}');`;
 
 
     db.any(sql).then(function(data) {
 
-        db.any("DEALLOCATE insert_todolist");
+        //db.any("DEALLOCATE insert_todolist");
         res.status(200).json({msg: "insert ok"}); //success!
 
     }).catch(function(err) {
@@ -64,7 +65,6 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    //var sql = 'SELECT * FROM listeview';
     var sql = 'SELECT * FROM todoview';
 
 
@@ -75,6 +75,7 @@ router.get('/', function (req, res) {
     }).catch(function(err) {
 
         res.status(500).json(err);
+        console.log("GET");
 
     });
 });

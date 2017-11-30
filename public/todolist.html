@@ -74,7 +74,7 @@
     //var url = "http://localhost:8080/todo/listitem/?token=" + token;
     var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
 
-    //fikset ting
+
     superfetch(url, "json", succ, error);
 
 
@@ -94,9 +94,11 @@
     var resArr = [];
 
 
+
     //Make array of all list names
 
     function succList(data){
+        console.log(data);
 
         // Sorter ut unike listeID-----------------------------
 
@@ -109,6 +111,7 @@
           if(i <= -1)
                 resArr.push({listid: item.listid, listname: item.listname});
         });
+
 
 
     }
@@ -242,6 +245,7 @@
     //error ----------------------------------------
     function error(err) {
         console.log(err);
+        console.log("error");
     }
 
 
