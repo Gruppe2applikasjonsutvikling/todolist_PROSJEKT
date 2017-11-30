@@ -53,9 +53,13 @@ var secret = "frenchfriestastegood!"; //used to create the token
 
     var upload = JSON.parse(req.body); //should be sanitized
 
-    var sql = `PREPARE get_user (text) AS
+    /*var sql = `PREPARE get_user (text) AS
                     SELECT * FROM users WHERE loginname=$1;
+                    EXECUTE get_user('${upload.loginname}')`;*/
+    var sql = `PREPARE get_user (text) AS
+                    SELECT * FROM "users" WHERE loginname="loginname";
                     EXECUTE get_user('${upload.loginname}')`;
+
     db.any(sql).then(function(data) {
 
         db.any("DEALLOCATE get_user");
