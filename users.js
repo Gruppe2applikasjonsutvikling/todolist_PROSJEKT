@@ -56,7 +56,6 @@ var secret = "frenchfriestastegood!"; //used to create the token
     var sql = `PREPARE get_user (text) AS
                     SELECT * FROM users WHERE loginname=$1;
                     EXECUTE get_user('${upload.loginname}')`;
-        console.log(upload);
     //var sql = `SELECT * FROM "users" WHERE loginname='${upload.loginname}`;
 
 

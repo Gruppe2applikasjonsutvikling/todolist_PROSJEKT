@@ -112,6 +112,8 @@
                 resArr.push({listid: item.listid, listname: item.listname});
         });
 
+        console.log(resArr);
+
 
 
     }
@@ -120,6 +122,7 @@
 
     //success --------------------------------------
     function succ(data) {
+        console.log(data);
 
 
 
@@ -158,6 +161,7 @@
                 sel2.appendChild(opt);
 
             }
+        console.log("hei");
 
 
 
@@ -274,7 +278,6 @@
     // DELETE ITEM FUNCTION
 
     function delItm() {
-        console.log("hei");
         console.log(event.currentTarget.id);
         var item = event.currentTarget.id;
         var token = JSON.parse(localStorage.getItem("logindata")).token;
@@ -289,7 +292,6 @@
 
         //delete success -------------------------------
     function del2Succ(data) {
-        console.log("oops");
         console.log(data);
     }
 
@@ -301,6 +303,7 @@
 
         //button click -------------------------
         inpBtn.onclick = function () {
+            console.log("dette er bare en test av add item knappen");
 
             var upload = JSON.stringify({
                 itemname: itemDesc.value,
@@ -321,6 +324,10 @@
 
 
             superfetch(url, "json", succ, error, cfg);
+            console.log(upload);
+
+
+            console.log("dette er slutten av funksjonen");
 
 
 

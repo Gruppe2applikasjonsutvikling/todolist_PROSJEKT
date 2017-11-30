@@ -36,7 +36,7 @@ router.use(function (req, res, next) {
 
 
 
-//endpoint: POST travels -----------------------------
+//endpoint: POST items -----------------------------
 router.post('/', bodyParser, function (req, res) {
 
     var upload = JSON.parse(req.body);
@@ -46,10 +46,14 @@ router.post('/', bodyParser, function (req, res) {
     /*var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
                 INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
 		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;*/
-    var sql = `PREPARE insert_listitem (int, text, date, text) AS
-                INSERT INTO "listitem" VALUES("listid", "itemdesc", "itemdeadl", "itemtag");
-		  EXECUTE insert_listitem ('${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;
 
+    /*var sql = `PREPARE insert_listitem (int, text, date, text) AS
+                INSERT INTO "listitem" VALUES("listid", "itemdesc", "itemdeadl", "itemtag");
+		  EXECUTE insert_listitem ('${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;*/
+
+    var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
+                INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
+		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemdesc}', '${upload.itemdeadl}', '${upload.itemtag}')`;
 
 
 
@@ -60,7 +64,6 @@ router.post('/', bodyParser, function (req, res) {
 
     }).catch(function(err) {
         res.status(500).json(err);
-        console.log("her fikk du en error!");
 
     });
 
