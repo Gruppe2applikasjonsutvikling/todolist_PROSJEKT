@@ -56,9 +56,10 @@ var secret = "frenchfriestastegood!"; //used to create the token
     /*var sql = `PREPARE get_user (text) AS
                     SELECT * FROM users WHERE loginname=$1;
                     EXECUTE get_user('${upload.loginname}')`;*/
+    var sql = `PREPARE get_user (text) AS
+                    SELECT * FROM "users" WHERE loginname="loginname";
+                    EXECUTE get_user('${upload.loginname}')`;
 
-    var sql = `SELECT * FROM users WHERE loginname=$1;`;
-        console.log("sqlen er laget");
 
     db.any(sql).then(function(data) {
 
@@ -90,7 +91,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
 
         }).catch(function(err) {
 
-            res.status(500).json({err});
+            res.status(500).json({err, msg: "error in users.js"});
 
         });
     });
