@@ -52,6 +52,7 @@
         }
 
         superfetch(url, "json", succ, error, cfg);
+        console.log(upload);
         console.log("superfetch ferdig");
 
     }
@@ -60,8 +61,7 @@
      //success --------------------------------------
     function succ(data) {
         console.log(data);
-        console.log("hva skjer her?");
-        console.log("vi prøver!");
+        console.log("får vi en suksess?");
 
         //save logindata/token to localStorage
 
@@ -76,7 +76,7 @@
     function error(err) {
         console.log(err);
         console.log("Her skjer det en feil");
-        p.innerHTML = "User already exists";
+        p.innerHTML = "User already exists, or database error idk";
     }
 
 
