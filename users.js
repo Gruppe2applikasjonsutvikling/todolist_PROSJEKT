@@ -58,6 +58,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
                     EXECUTE get_user('${upload.loginname}')`;*/
 
     var sql = `SELECT * FROM users WHERE loginname=$1;`;
+        console.log("sqlen er laget");
 
     db.any(sql).then(function(data) {
 
