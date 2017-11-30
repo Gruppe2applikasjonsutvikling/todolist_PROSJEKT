@@ -21,7 +21,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
     /*var sql = `PREPARE insert_user (text, text, text) AS
                 INSERT INTO users VALUES($2, $3, $4); EXECUTE insert_user
                 ('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;*/
-    var sql = `INSERT INTO "users" ("Username", "Password", "fullname") VALUES('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;
+    var sql = `INSERT INTO "users" ("loginname", "password", "fullname") VALUES('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;
 
 
     db.any(sql).then(function(data) {
@@ -54,7 +54,7 @@ var secret = "frenchfriestastegood!"; //used to create the token
     /*var sql = `PREPARE get_user (text) AS
                     SELECT * FROM users WHERE loginname=$1;
                     EXECUTE get_user('${upload.loginname}')`;*/
-    var sql = `SELECT * FROM "users" WHERE Username='${upload.loginname}`;
+    var sql = `SELECT * FROM "users" WHERE loginname='${upload.loginname}`;
 
 
     db.any(sql).then(function(data) {
