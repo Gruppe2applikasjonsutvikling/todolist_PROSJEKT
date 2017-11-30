@@ -67,7 +67,7 @@
     var token = JSON.parse(localStorage.getItem("logindata")).token;
     //var listeurl = "http://localhost:8080/todo/todolist/?token=" + token;
     //var listeurl = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
-    var listeurl = "/todo/todolist/?token=" + token;"
+    var listeurl = "/todo/todolist/?token=" + token;
     superfetch(listeurl, "json", succList, error);
 
     //listeitems
@@ -75,6 +75,7 @@
     //var url = "http://localhost:8080/todo/listitem/?token=" + token;
     //var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
     var url = "/todo/listitem/?token=" + token;
+    //fikset ting
     superfetch(url, "json", succ, error);
 
 
