@@ -42,9 +42,12 @@ router.post('/', bodyParser, function (req, res) {
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
-    var sql = `PREPARE insert_todolist (int, int, text, text) AS
+    /*var sql = `PREPARE insert_todolist (int, int, text, text) AS
                 INSERT INTO todolist VALUES(DEFAULT, $2, $3, $4);
-		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;
+		  EXECUTE insert_todolist (0, 0, '${upload.listname}', '${logindata.loginname}')`;*/
+    var sql = `PREPARE insert_todolist (text, text) AS
+                INSERT INTO "todolist" VALUES("listname","loginname");
+		  EXECUTE insert_todolist ('${upload.listname}', '${logindata.loginname}')`;
 
 
     db.any(sql).then(function(data) {
