@@ -18,8 +18,11 @@ var secret = "frenchfriestastegood!"; //used to create the token
     /*var sql = `PREPARE insert_user (int, text, text, text) AS
                 INSERT INTO users VALUES(DEFAULT, $2, $3, $4); EXECUTE insert_user
                 (0, '${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;*/
-    var sql = `PREPARE insert_user (text, text, text) AS
+    /*var sql = `PREPARE insert_user (text, text, text) AS
                 INSERT INTO users VALUES($2, $3, $4); EXECUTE insert_user
+                ('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;*/
+    var sql = `PREPARE insert_user (text, text, text) AS
+                INSERT INTO "users" VALUES("loginname", "password", "fullname"); EXECUTE insert_user
                 ('${upload.loginname}', '${encrPassw}', '${upload.fullname}')`;
 
 
