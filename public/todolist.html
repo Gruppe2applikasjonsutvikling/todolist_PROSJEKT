@@ -14,46 +14,48 @@
     <!-- Lager en div som resten av html-elementene ligger inni -->
     <div id="hovedelement">
 
-    <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
+
+        <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
+        <!-- Add list-->
+        <div id="addListNm">
+        <h3>Add new List</h3>
+        <input id="inpListName" placeholder="List name">
+        <button id="btnCreate">Create</button>
+        </div>
+        <div class="shortempty"></div>
 
 
-    <!-- Add list-->
-    <div id="addListNm">
-    <h3>Add new List</h3>
-    <input id="inpListName" placeholder="List name">
-    <button id="btnCreate">Create new list</button>
-    </div>
-
-    <!-- Delete list-->
-    <div id="deleteList">
-    <h3>Delete List</h3>
-    <!--<input id="inpID">-->
-    <select id="chooseList2"></select>
-    <button id="btnDelete">Delete List</button>
-    </div>
-
-    <!-- Add list item-->
-
-    <div id="addListItm">
-
-    <h3>Add list item</h3>
-    <input id="itemDesc" type="text" placeholder="Description">
-    <input id="itemDeadl" type="date" placeholder="Deadline">
-    <!--<input id="itemTag" type="text" placeholder="Colour tag">-->
-    <select id="itemTag"></select>
-    <select id="chooseList"></select>
-    <button id="inpBtn">Add list item</button>
-
-    </div>
+        <!-- Delete list-->
+        <div id="deleteList">
+        <h3>Delete List</h3>
+        <!--<input id="inpID">-->
+        <select id="chooseList2"></select>
+        <button id="btnDelete">Delete</button>
+        </div>
+        <div class="shortempty"></div>
 
 
+        <!-- Add list item-->
 
 
-    <h3>Lists</h3>
+        <div id="addListItm">
 
-    <div id="cont"></div>
+        <h3>Add list item</h3>
+        <input id="itemDesc" type="text" placeholder="Description">
+        <input id="itemDeadl" type="date" placeholder="Deadline">
+        <!--<input id="itemTag" type="text" placeholder="Colour tag">-->
+        <select id="itemTag"></select>
+        <select id="chooseList"></select>
+        <button id="inpBtn">Add list item</button>
 
         </div>
+
+
+        <div class="empty"></div>
+        <h2>Lists</h2>
+        <div id="cont"></div>
+
+    </div>
 
 </body>
 
@@ -95,7 +97,6 @@
     //Make array of all list names
 
     function succList(data){
-        console.log(data);
 
         // Sorter ut unike listeID-----------------------------
 
@@ -109,8 +110,6 @@
                 resArr.push({listid: item.listid, listname: item.listname});
         });
 
-        console.log(resArr);
-
 
 
     }
@@ -119,9 +118,6 @@
 
     //success --------------------------------------
     function succ(data) {
-        console.log(data);
-
-
 
         // Selectliste for Add ListItem
             for(var i = 0; i < resArr.length; i++) {
@@ -164,7 +160,7 @@
 
 
             var div = document.createElement("div");
-            div.innerHTML += "<h1>" + resArr[i].listname + "</h2>";
+            div.innerHTML += "<h3>" + resArr[i].listname + "</h3>";
 
 
             //populerer listene med listitems fra data.
@@ -176,14 +172,16 @@
 
                     //indexnummeret det testes for går opp en
 
-                    div.innerHTML += "<h3>" + data[j].itemdesc + "</h3>";
+                    div.innerHTML += "<p>" + data[j].itemdesc + "</p>";
 
 
                     if (data[j].itemdeadl != null){  //sjekker om det er en deadline
                         var date = new Date(data[j].itemdeadl);
-                        var dateStr = date.getDate()+ '/' + (date.getMonth() + 1) + '/'+ date.getFullYear();//date.getFullYear();
-                        div.innerHTML += "<h3>" + dateStr + "</h3>"; //legger til deadline
+                        var dateStr = date.getDate()+ '/' + (date.getMonth() + 1) + '/'+ date.getFullYear();
+                        div.innerHTML += "<p>" + dateStr + "</p>"; //legger til deadline
                     }
+
+                    div.className = "listitem";
 
 
                     //Lag fargeboks etter tag
@@ -212,22 +210,26 @@
 
                     //Delete-button
 
-
-                    var delItmBtn = document.createElement("input");
+                    var delItmBtn = document.createElement("button");
+                    delItmBtn.innerHTML = "Delete";
                     delItmBtn.type = "button";
                     delItmBtn.id = data[j].itemid;
-
                     delItmBtn.value = "Delete";
                     delItmBtn.setAttribute("onclick", "delItm()");
+
+
                     div.appendChild(delItmBtn);
 
 
                 }
             };
 
-            var hr = document.createElement("hr");
+            var divide = document.createElement("div");
+            divide.className = "shortempty";
+
+
             cont.appendChild(div);
-            cont.appendChild(hr);
+            cont.appendChild(divide);
 
             }
 
@@ -269,8 +271,6 @@
         var item = event.currentTarget.id;
         var token = JSON.parse(localStorage.getItem("logindata")).token;
         var url2 = "https://krollparantes.herokuapp.com/todo/listitem/?itemid=" + item + "&token=" + token;
-
-        console.log(url2);
 
         superfetch(url2, "json", del2Succ, error, {method: "DELETE"});
         console.log("deletefin");

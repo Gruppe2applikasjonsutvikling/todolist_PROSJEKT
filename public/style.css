@@ -27,44 +27,28 @@ input:focus {
 }
 
 button {
-    font-family: 'Dosis';
-    width: 27%;
-    padding: 12px 20px;
-    margin: 8px 0px;
-    margin-left: 1%;
+    font-family: 'Dosis', Georgia, Times, serif;
+    width: 99%;
+    padding: 2px 20px;
+    margin: 8px 0px 0px 1px;
     display: inline-block;
     border: 1px solid lightgray;
     background-color: #074C6F;
     box-sizing: border-box;
     border-radius: 20px;
     color: white;
+    text-align: center;
+    font-size: 15px;
 
 }
 
 button:hover {
 
-
-
-
     box-shadow: 3px 3px 3px white;
-    font-family: 'Dosis', Georgia, Times, serif;
-
-
-}
-
-#btnLong {
-
-    font-family: 'Dosis';
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0px;
-    margin-left: 0%;
-    display: inline-block;
-    border: 1px solid lightgray;
-    background-color: #074C6F;
-    box-sizing: border-box;
-    border-radius: 20px;
-    color: white;
+    /*font-family: 'Dosis', Georgia, Times, serif;*/
+
+
 }
 
 #logo {
@@ -114,6 +98,28 @@ h3{
     text-align: center;
     font-family: 'Dosis', Georgia, Times, serif;
     font-size: 15px;
+    padding: 10px;
+
+}
+
+h2{
+    border: 1px solid lightgray;
+    padding: 5px;
+    background-color: #074C6F;
+    box-sizing: border-box;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    font-family: 'Dosis', Georgia, Times, serif;
+    font-size: 20x;
+
+}
+
+p{
+    text-align: center;
+    font-family: 'Dosis', Georgia, Times, serif;
+    font-size: 20x;
+    color: #074C6F;
 
 }
 
@@ -137,33 +143,63 @@ select{
 
 .red{
 
-            background: red;
-            width:50px;
+            background: #e76654;
+            width:100%px;
             height:20px;
 
         }
 
 .yellow{
 
-         background: yellow;
-         width:50px;
+         background: #e4dc55;
+         width:100%px;
          height:20px;
 
         }
 
 .green{
 
-        background: green;
-         width:50px;
+        background: #53c360;
+         width:100%px;
         height:20px;
 
         }
     .noTag{
-        background: blue;
-        width:50px;
+        background: #4fa5df;
+        width:100%px;
         height:20px;
         }
 
-#btns{
-    text-align: center;
+
+.listitem{
+    background-color: #eef8ff;
+    border-radius: 20px;
+}
+
+.empty{
+    height:50px;
+}
+
+.shortempty{
+    height:20px;
+}
+
+#addListNm{
+    background-color: #eef8ff;
+    border-radius: 20px;
+}
+
+#deleteList{
+    background-color: #eef8ff;
+    border-radius: 20px;
+}
+
+#addListItm{
+    background-color: #eef8ff;
+    border-radius: 20px;
+}
+
+#user{
+    background-color: #eef8ff;
+    border-radius: 20px;
 }

@@ -11,17 +11,17 @@
 <body>
 
     <div id="hovedelement">
-            <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
+        <div id="logo"><img src="Logo.png" alt="logo" width="40%"></div>
+        <div id="user">
 
+            <h2>Login</h2>
             <input id="inpLoginname" placeholder="Loginname">
             <input id="inpPassword" type="password" placeholder="Password">
+            <button id="btnLogin">Log in</button>
+            <button id="btnCrUsr">Create user</button>
 
-            <div id="btns">
-                <button id="btnLogin">Log in</button>
-                <button id="btnCrUsr">Create user</button>
-            </div>
+        </div>
 
-            <p id="error"></p>
     </div>
 
 </body>
@@ -36,7 +36,6 @@
     var inpLoginname = document.getElementById("inpLoginname");
     var inpPassword = document.getElementById("inpPassword");
     var btnCreate = document.getElementById("btnLogin");
-    var p = document.getElementById("error");
     var btnCrUsr = document.getElementById("btnCrUsr");
 
     btnCrUsr.onclick = function() {
