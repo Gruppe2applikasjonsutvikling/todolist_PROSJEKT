@@ -5,9 +5,6 @@ const app = express(); //server-app
 
 app.use(express.static(__dirname + '/public'));
 
-//var pgp = require('pg-promise')();
-//var db = pgp('postgres://postgres:root@localhost:5432/todo');
-
 
 
 // global for all routes -------------------------
@@ -38,4 +35,3 @@ app.listen(process.env.PORT || 8000, function () {
   console.log('Server listening on port 3000!');
 });
 
-//TODO: Erstatt alle "localhost" url-ene

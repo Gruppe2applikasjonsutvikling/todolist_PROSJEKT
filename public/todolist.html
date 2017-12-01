@@ -65,13 +65,10 @@
 
     //listenavn
     var token = JSON.parse(localStorage.getItem("logindata")).token;
-    //var listeurl = "http://localhost:8080/todo/todolist/?token=" + token;
     var listeurl = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
     superfetch(listeurl, "json", succList, error);
 
     //listeitems
-
-    //var url = "http://localhost:8080/todo/listitem/?token=" + token;
     var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
 
 
@@ -137,33 +134,27 @@
 
         //Selectliste for add Color Tag i Add ListItem
 
-    var colArr = [];
-        colArr[0] = {color: "Green", id: "0"}
-        colArr[1] = {color: "Yellow", id: "1"}
-        colArr[2] = {color: "Red", id: "2"}
+            var colArr = [];
+                colArr[0] = {color: "Green", id: "0"}
+                colArr[1] = {color: "Yellow", id: "1"}
+                colArr[2] = {color: "Red", id: "2"}
 
-    for(var i = 0; i < colArr.length; i++) {
-                var opt = document.createElement("option");
-                opt.innerHTML = colArr[i].color;
-                opt.value = colArr[i].id;
-                itemTag.appendChild(opt);
+            for(var i = 0; i < colArr.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.innerHTML = colArr[i].color;
+                        opt.value = colArr[i].id;
+                        itemTag.appendChild(opt);
 
-            }
+                    }
 
-    //console.log(colArr);
+            // Selectliste for Delete List
+            for(var i = 0; i < resArr.length; i++) {
+                    var opt = document.createElement("option");
+                    opt.innerHTML = resArr[i].listname;
+                    opt.value = resArr[i].listid;
+                    sel2.appendChild(opt);
 
-
-        // Selectliste for Delete List
-        for(var i = 0; i < resArr.length; i++) {
-                var opt = document.createElement("option");
-                opt.innerHTML = resArr[i].listname;
-                opt.value = resArr[i].listid;
-                sel2.appendChild(opt);
-
-            }
-        console.log("hei");
-
-
+                }
 
 
 
@@ -174,8 +165,6 @@
 
             var div = document.createElement("div");
             div.innerHTML += "<h1>" + resArr[i].listname + "</h2>";
-
-            var hr = document.createElement("hr");
 
 
             //populerer listene med listitems fra data.
@@ -193,7 +182,6 @@
                     if (data[j].itemdeadl != null){  //sjekker om det er en deadline
                         var date = new Date(data[j].itemdeadl);
                         var dateStr = date.getDate()+ '/' + (date.getMonth() + 1) + '/'+ date.getFullYear();//date.getFullYear();
-                        //div.innerHTML += "<h3>Deadline: " + dateStr + "</h3>"; //legger til deadline
                         div.innerHTML += "<h3>" + dateStr + "</h3>"; //legger til deadline
                     }
 
@@ -263,7 +251,6 @@
 
 
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url = "http://localhost:8080/todo/todolist/?listid=" + sel2.value + "&token=" + token;
         var url = "https://krollparantes.herokuapp.com/todo/todolist/?listid=" + sel2.value + "&token=" + token;
 
         superfetch(url, "json", delSucc, error, {method: "DELETE"});
@@ -281,7 +268,6 @@
         console.log(event.currentTarget.id);
         var item = event.currentTarget.id;
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url2 = "http://localhost:8080/todo/listitem/?itemid=" + item + "&token=" + token;
         var url2 = "https://krollparantes.herokuapp.com/todo/listitem/?itemid=" + item + "&token=" + token;
 
         console.log(url2);
@@ -313,7 +299,6 @@
                 });
 
             var token = JSON.parse(localStorage.getItem("logindata")).token;
-            //var url = "http://localhost:8080/todo/listitem/?token=" + token;
             var url = "https://krollparantes.herokuapp.com/todo/listitem/?token=" + token;
 
             var cfg = {
@@ -357,7 +342,6 @@
         });
 
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        //var url = "http://localhost:8080/todo/todolist/?token=" + token;
         var url = "https://krollparantes.herokuapp.com/todo/todolist/?token=" + token;
 
         var cfg = {

@@ -14,8 +14,11 @@
         <input id="inpLoginname" placeholder="Loginname">
         <input id="inpPassword" placeholder="Password">
         <input id="inpFullname" placeholder="Full name">
-        <button id="btnCreate">Create User</button>
-        <p id="usererr"></p>
+        <div id="btns">
+            <button id="btnCreate">Create User</button>
+            <button id="btnLogin">Back to Login</button>
+        </div>
+
     </div>
 
 </body>
@@ -28,9 +31,16 @@
     var inpPassword = document.getElementById("inpPassword");
     var inpFullname = document.getElementById("inpFullname");
     var btnCreate = document.getElementById("btnCreate");
-    var p = document.getElementById("usererr");
+    var btnLogin = document.getElementById("btnLogin");
 
-    //button click ---------------------------------
+    //button click backtologin --------------------------------
+    btnLogin.onclick = function() {
+        window.location.assign("https://krollparantes.herokuapp.com");
+
+    }
+
+
+    //button click createuser ---------------------------------
     btnCreate.onclick = function() {
 
 
@@ -41,10 +51,7 @@
         });
 
 
-        //var url = "http://localhost:8000/todo/users/";
-
         var url = "https://krollparantes.herokuapp.com/todo/users";
-        //var url = "todo/users";
 
         var cfg = {
             method: "POST",
@@ -61,23 +68,21 @@
      //success --------------------------------------
     function succ(data) {
         console.log(data);
-        console.log("får vi en suksess?");
 
         //save logindata/token to localStorage
 
-
         localStorage.setItem("logindata", JSON.stringify(data));
-        //window.location.assign("https://krollparantes.herokuapp.com");
-        console.log("suksess!");
+        window.location.assign("https://krollparantes.herokuapp.com");
 
     }
 
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        console.log("Her skjer det en feil");
-        p.innerHTML = "User already exists, or database error idk";
+        alert("User already exists");
     }
+
+
 
 
 </script>

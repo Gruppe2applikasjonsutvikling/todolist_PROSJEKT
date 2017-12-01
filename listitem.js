@@ -42,15 +42,6 @@ router.post('/', bodyParser, function (req, res) {
     var upload = JSON.parse(req.body);
     //Note. the uploaded data should also be sanitized for any malicious code, e.g. use the module ‘sanitize-html’
 
-
-    /*var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
-                INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
-		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;*/
-
-    /*var sql = `PREPARE insert_listitem (int, text, date, text) AS
-                INSERT INTO "listitem" VALUES("listid", "itemdesc", "itemdeadl", "itemtag");
-		  EXECUTE insert_listitem ('${upload.listid}', '${upload.itemname}',  '${upload.itemdeadl}', '${upload.itemtag}')`;*/
-
     var sql = `PREPARE insert_listitem (int, int, text, date, text) AS
                 INSERT INTO listitem VALUES(DEFAULT, $2, $3, $4, $5);
 		  EXECUTE insert_listitem (0, '${upload.listid}', '${upload.itemname}', '${upload.itemdeadl}', '${upload.itemtag}')`;
@@ -72,7 +63,6 @@ router.post('/', bodyParser, function (req, res) {
 //endpoint: GET travels -----------------------------
 router.get('/', function (req, res) {
 
-    //var sql = 'SELECT * FROM listitemview';
     var sql = 'SELECT * FROM listeview';
 
     db.any(sql).then(function(data) {

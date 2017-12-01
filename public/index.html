@@ -51,9 +51,7 @@
             password: inpPassword.value
         });
 
-        //var url = "http://localhost:3000/todo/users/auth/";
         var url = "https://krollparantes.herokuapp.com/todo/users/auth/";
-        //var url = "todo/users/auth/";
 
         var cfg = {
             method: "POST",
@@ -68,15 +66,17 @@
     function succ(data) {
         //save logindata/token to localStorage
         localStorage.setItem("logindata", JSON.stringify(data));
-        window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
         var token = JSON.parse(localStorage.getItem("logindata")).token;
-        console.log(token);
+
+        //redirect to the todolist page
+        window.location.assign("https://krollparantes.herokuapp.com/todolist.html");
+
     }
 
     //error ----------------------------------------
     function error(err) {
         console.log(err);
-        //alert("Wrong username or password!");
+        alert("Wrong username or password!");
 
     }
 
